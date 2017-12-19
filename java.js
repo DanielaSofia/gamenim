@@ -4,6 +4,7 @@ var plvic2=0;
 var plvic3=0;
 var valor=0;
 var gamename;
+var namegame;
 
   //limpar o tabuleiro
   function limpar(){
@@ -35,7 +36,8 @@ var gamename;
       if(tamanho>10 || Number.isInteger(tamanho) || tamanho<1){
         alert("Error! size is between 1 and 10.\n Choose another value");
         }else {
-          join();
+         join();
+         
           tabu();
           playerPlay();
         }
@@ -298,7 +300,7 @@ var gamename;
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4 && xhr.status == 200){
         var data = xhr.responseText;
-        console.log(data);
+       // console.log(data);
         alert('Bem-vindo!');
         login();
       }else{ 
@@ -333,16 +335,18 @@ var gamename;
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4 && xhr.status == 200){
         var jogo = xhr.responseText;
-       //console.log(jogo);//da o gamename com json
-         var gname =JSON.parse(jogo);
-         //console.log(gname); //js object
-         gamename = gname.game;
-        console.log(gamename);//da o gamename
-          if (callback && typeof(callback) === "function") {
+        var gname =JSON.parse(jogo);
+        gamename = gname.game;
+        //console.log(gamename);//da o gamename
+        if (callback && typeof(callback) === "function") {
           callback(gamename);
         }       
-      
         alert('O jogo foi criado');
+        var eventSource = new EventSource(url); 
+        eventSource.onmessage = function(event) { 
+          var data = JSON.parse(event.data);
+         } 
+         eventSource.close();
       }
           
     }
@@ -356,9 +360,9 @@ var gamename;
      if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
      var xhr = new XMLHttpRequest();
      xhr.open("POST","http://twserver.alunos.dcc.fc.up.pt:8008"+"/leave",true);
-     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+   
      
-     var objt = { nick: user,pass:passi, game:gamename };
+     var objt = { nick: user,pass:passi, game:namegame };
      var stri =JSON.stringify(objt);
      console.log(stri);
      xhr.send(stri); 
@@ -383,7 +387,7 @@ var gamename;
      var passi = document.getElementById("pass").value;
      join(function(gamename){ return (gamename); });
   
-     //console.log(ganame);
+     console.log(gamename);
      //buttons = document.getElementsByClassName("peca"+i);
      if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
      var xhr = new XMLHttpRequest();
