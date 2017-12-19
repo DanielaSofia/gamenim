@@ -312,12 +312,11 @@ var gamename;
 
   
   
- 
+ function funct(gname){return gname;}
   
-  function loadgamename(gname, callback) {
-    setTimeout(function() {
-      return callback(gname) }, 1000);
-  }
+  function loadgamename(gname) {
+      return funct(gname); }
+  
   function join(){
     //group , nick ,pass,size
     var user = document.getElementById("user").value;
@@ -337,7 +336,7 @@ var gamename;
       if(xhr.readyState < 4 && xhr.status == 200){
         var jogo =xhr.responseText;
         gamename=jogo.game;
-        loadgamename(gamename, loadgame);
+        loadgamename(gamename);
        
          
         console.log(gamename);
@@ -347,7 +346,7 @@ var gamename;
     }
     
   }
-
+var gname = funct(gname);
   function leave(){
     //nick pass game
     var user = document.getElementById("user").value;
