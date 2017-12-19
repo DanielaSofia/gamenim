@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="estilos.css" type="text/css">
+        <script src=java.js></script>
+        <title>Nim's Game </title>
+    </head>
+
+    <body>
+        <h1>Nim's Game</h1>
+        <div class="comandos">
+
+          <div class="dropdown">
+              <a href="#instr"><button onMouseover="displayQuote()" onMouseout="hiddeQuote()" class="dropbtn" id="instr">Instructions</button></a>
+            </div>
+
+            <div class="dropdown">
+              <a href="#ranki"><button onMouseover="displayRank()" onMouseout="hiddeRank()"class="dropbtn" id="ranki">Ranking</button></a>
+            </div>
+        </div>
+
+        <div>
+              <div  id="inst" class="inst">
+                  <p>Nim is a mathematical strategy game in which two players alternately remove objects (pieces) from different stacks. At each move, the player must remove at least one object from a stack and all objects removed must belong to the same stack. The goal of the game is to remove the last object.</p>
+              </div>
+
+              <div id="rank" class="rank">
+                  <p> </p>
+                  <table>
+                      <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th>Score</th>
+                          <th></th>
+                      </tr>
+                      <tr>
+                          <th></th>
+                          <th>Player</th>
+                          <th>Easy</th>
+                          <th>Medium</th>
+                          <th>Hard</th>
+                      </tr>
+                      <tr>
+                          <td>1º</td>
+                          <td><div id="nome1">Computer</div></td>
+                          <td><div id="pontos1easy">---</div></td>
+                          <td><div id="pontos1medium">---</div></td>
+                          <td><div id="pontos1hard">---</div></td>
+                      </tr>
+                      <tr>
+                          <td>2º</td>
+                          <td><div id="nome2">Name</div></td>
+                          <td><div id="pontos2easy">---</div></td>
+                          <td><div id="pontos2medium">---</div></td>
+                          <td><div id="pontos2hard">---</div></td>
+                      </tr>
+                      <tr>
+                          <td>3º</td>
+                          <td><div id="nome3">Name</div></td>
+                          <td><div id="pontos3easy">---</div></td>
+                          <td><div id="pontos3medium">---</div></td>
+                          <td><div id="pontos3hard">---</div></td>
+                      </tr>
+                  </table>
+
+              </div>
+        </div>
+
+    <p> </p>
+      <div class="entrar" id="entrar">
+        <form class="form">
+        <div class="login">
+            <label><b>Username:</b></label><p> </p>
+            <input type="text" name="nick" id="user" class="user" value="user" placeholder="Username" required> <p> </p>
+              <label><b>Password:</b></label> <p> </p>
+            <input type="password" name="pass" id="pass" value="pass" required placeholder="Password"> <p> </p>
+        </div>
+        </form>
+        <button onclick="registo()" class="submit" id="submit" type="submit">Login</button>
+        <div class="display" value="ola"></div>
+      </div>
+
+     <div id="entrou" class="entrou">
+        <h2>Welcome</h2>
+        <div id="username">Name  </div>
+        <p> </p>
+        <div onclick="giveup()" id="give" class="give">Give Up!</div><p></p>
+        <div onclick="logout()" id="log" class="log">Log Out!</div>
+    </div>
+
+        <!-- inicialmente escondido depois aparece -->
+        <div id="conf" class="conf">
+          <h3>Configurations</h3>
+
+          <ol>
+              <li><h4>Board Size:</h4><input type="text" id="colunas" placeholder="ex:5"></li>
+              <li><h4>Game Type:</h4>
+
+              <ul>
+                      <li><input type="radio" name="game" value="pvc" id="pvc" checked="checked" > Player vs Computer<br></li>
+                      <li><input type="radio" name="game" value="pvp" id="pvp" > Player vs Player<br></li>
+              </ul>
+            </li>
+            <li><h4>Who plays first:</h4>
+
+              <ul>
+                  <li><input type="radio" name="fp" value="computer" id="com"  checked="checked" > Computer<br></li>
+                  <li><input type="radio" name="fp" value="human" id="hum"> Human<br></li>
+                </ul>
+              </li>
+
+            <li><h4>AI Level</h4>
+              <ul>
+                  <li><input type="radio" name="ai" value="facil" id="facil"  checked="checked" > Easy<br></li>
+                  <li><input type="radio" name="ai" value="medio" id="medio"> Medium<br></li>
+                  <li><input type="radio" name="ai" value="dificil" id="dificil"> Hard<br></li>
+              </ul>
+            </li>
+
+          </ol>
+        <button onclick="players()" id="start" class="start">Start Game!</button>
+        </div>
+
+        <div id="tabuleiro" class="tabuleiro">
+        </div>
+
+        <p> </p>
+        <button onclick="jogada()" id="ft" class="ft">Finish Turn!</button>
+
+        <p> </p>
+
+        </body>
+</html>
