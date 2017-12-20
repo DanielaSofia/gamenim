@@ -5,11 +5,13 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="estilos.css" type="text/css">
         <script src=java.js></script>
+        
         <title>Nim's Game </title>
     </head>
 
     <body>
-        <h1>Nim's Game</h1>
+        <canvas id="tela" width="300" height="200">  </canvas>
+        <script src=java.js></script>
         <div class="comandos">
 
           <div class="dropdown">
@@ -69,59 +71,56 @@
               </div>
         </div>
 
-    <p> </p>
-      <div class="entrar" id="entrar">
-        <form class="form">
-        <div class="login">
-            <label><b>Username:</b></label><p> </p>
-            <input type="text" name="nick" id="user" class="user" value="user" placeholder="Username" required> <p> </p>
-              <label><b>Password:</b></label> <p> </p>
-            <input type="password" name="pass" id="pass" value="pass" required placeholder="Password"> <p> </p>
-        </div>
-        </form>
-        <button onclick="registo()" class="submit" id="submit" type="submit">Login</button>
-        <div class="display" value="ola"></div>
-      </div>
-
-     <div id="entrou" class="entrou">
-        <h2>Welcome</h2>
-        <div id="username">Name  </div>
         <p> </p>
-        <div onclick="giveup()" id="give" class="give">Give Up!</div><p></p>
-        <div onclick="logout()" id="log" class="log">Log Out!</div>
-    </div>
+        <div class="entrar" id="entrar">
+            <form class="form">
+                <div class="login">
+                    <label><b>Username:</b></label><p> </p>
+                    <input type="text" name="nick" id="user" class="user" value="user" placeholder="Username" required> <p> </p>
+                    <label><b>Password:</b></label> <p> </p>
+                    <input type="password" name="pass" id="pass" value="pass" required placeholder="Password"> <p> </p>
+                </div>
+            </form>
+            <button onclick="registo()" class="submit" id="submit" type="submit">Login</button>
+            <div class="display" value="ola"></div>
+        </div>
+
+        <div id="entrou" class="entrou">
+            <h2>Welcome</h2>
+            <div id="username">Name  </div>
+            <p> </p>
+            <div onclick="giveup()" id="give" class="give">Give Up!</div><p></p>
+            <div onclick="logout()" id="log" class="log">Log Out!</div>
+        </div>
 
         <!-- inicialmente escondido depois aparece -->
         <div id="conf" class="conf">
           <h3>Configurations</h3>
+            <ol>
+                <li><h4>Board Size:</h4><input type="text" id="colunas" placeholder="ex:5"></li>
+                <li><h4>Game Type:</h4>
+                    <ul>
+                            <li><input type="radio" name="game" value="pvc" id="pvc" checked="checked" > Player vs Computer<br></li>
+                            <li><input type="radio" name="game" value="pvp" id="pvp" > Player vs Player<br></li>
+                    </ul>
+                    </li>
+                    <li><h4>Who plays first:</h4>
+                        <ul>
+                        <li><input type="radio" name="fp" value="computer" id="com"  checked="checked" > Computer<br></li>
+                        <li><input type="radio" name="fp" value="human" id="hum"> Human<br></li>
+                        </ul>
+                </li>
 
-          <ol>
-              <li><h4>Board Size:</h4><input type="text" id="colunas" placeholder="ex:5"></li>
-              <li><h4>Game Type:</h4>
-
-              <ul>
-                      <li><input type="radio" name="game" value="pvc" id="pvc" checked="checked" > Player vs Computer<br></li>
-                      <li><input type="radio" name="game" value="pvp" id="pvp" > Player vs Player<br></li>
-              </ul>
-            </li>
-            <li><h4>Who plays first:</h4>
-
-              <ul>
-                  <li><input type="radio" name="fp" value="computer" id="com"  checked="checked" > Computer<br></li>
-                  <li><input type="radio" name="fp" value="human" id="hum"> Human<br></li>
+                <li><h4>AI Level</h4>
+                <ul>
+                    <li><input type="radio" name="ai" value="facil" id="facil"  checked="checked" > Easy<br></li>
+                    <li><input type="radio" name="ai" value="medio" id="medio"> Medium<br></li>
+                    <li><input type="radio" name="ai" value="dificil" id="dificil"> Hard<br></li>
                 </ul>
-              </li>
+                </li>
 
-            <li><h4>AI Level</h4>
-              <ul>
-                  <li><input type="radio" name="ai" value="facil" id="facil"  checked="checked" > Easy<br></li>
-                  <li><input type="radio" name="ai" value="medio" id="medio"> Medium<br></li>
-                  <li><input type="radio" name="ai" value="dificil" id="dificil"> Hard<br></li>
-              </ul>
-            </li>
-
-          </ol>
-        <button onclick="players()" id="start" class="start">Start Game!</button>
+            </ol>
+            <button onclick="players()" id="start" class="start">Start Game!</button>
         </div>
 
         <div id="tabuleiro" class="tabuleiro">

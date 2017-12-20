@@ -6,6 +6,11 @@ var valor=0;
 var gamename;
 var namegame;
 
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.font = "30px Arial";
+ctx.strokeText("Hello World",10,50);
+
   //limpar o tabuleiro
   function limpar(){
     var div = document.getElementById("tabuleiro");
@@ -36,8 +41,7 @@ var namegame;
       if(tamanho>10 || Number.isInteger(tamanho) || tamanho<1){
         alert("Error! size is between 1 and 10.\n Choose another value");
         }else {
-         join();
-         
+          join();
           tabu();
           playerPlay();
         }
@@ -341,12 +345,32 @@ var namegame;
         if (callback && typeof(callback) === "function") {
           callback(gamename);
         }       
-        alert('O jogo foi criado');
+        
+        update(gamename);
+        var url = "http://twserver.alunos.dcc.fc.up.pt:8008/update?nick"+user+"&game"+gamename;
+        //cria objeto de comunicaçao
         var eventSource = new EventSource(url); 
+        
+        //erro na comunicacao
+        eventSource.onerror = function(event) { 
+         // var dataerror = JSON.parse(event.data);
+         alert("conexao nao foi feita");
+         } 
+        //conexao estabelecida
+        eventSource.onstart = function(event) { 
+          //var datastart = JSON.parse(event.data);
+          alert("conexao estabelecida");
+         } 
+        
+        
+        // nova msg recebida
         eventSource.onmessage = function(event) { 
-          var data = JSON.parse(event.data);
+          var datamessages = JSON.parse(event.data);
+          if(datamessages =={})alert("À espera do outro jogador!")
          } 
          eventSource.close();
+
+         alert('O jogo foi criado');
       }
           
     }
@@ -355,6 +379,7 @@ var namegame;
 
   function leave(){
     //nick pass game
+    gname();
     var user = document.getElementById("user").value;
     var passi = document.getElementById("pass").value;
      if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
@@ -362,13 +387,13 @@ var namegame;
      xhr.open("POST","http://twserver.alunos.dcc.fc.up.pt:8008"+"/leave",true);
    
      
-     var objt = { nick: user,pass:passi, game:namegame };
+     var objt = { nick: user,pass:passi, game:gamename };
      var stri =JSON.stringify(objt);
      console.log(stri);
      xhr.send(stri); 
  
      xhr.onreadystatechange = function() {
-       if(xhr.readyState < 4 && xhr.status == 200){
+       if(xhr.readyState == 4 && xhr.status == 200){
          var data = xhr.responseText;
          console.log(data);
          alert('O jogador desistiu do tempo');
@@ -378,6 +403,10 @@ var namegame;
      }     
   }
    
+  function gname(){
+    var ganame= join(function(gamename){ return (gamename); });
+    console.log(ganame);
+  }
 
 
    function notify( linha ,  pecass){
@@ -385,46 +414,41 @@ var namegame;
    
      var user = document.getElementById("user").value;
      var passi = document.getElementById("pass").value;
-     join(function(gamename){ return (gamename); });
-  
-     console.log(gamename);
-     //buttons = document.getElementsByClassName("peca"+i);
      if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
      var xhr = new XMLHttpRequest();
      xhr.open("POST","http://twserver.alunos.dcc.fc.up.pt:8008"+"/notify",true);
    
-     
-     var objt = { nick: user, pass: passi, game: gamename, stack: linha , pieces:pecass};
+     var objt = { nick: user, pass: passi, game: gamename, stack: linha+1 , pieces:pecass};
      var stri =JSON.stringify(objt);
      console.log(stri);
      xhr.send(stri); 
  
      xhr.onreadystatechange = function() {
-       if(xhr.readyState < 4 && xhr.status == 200){
+       if(xhr.readyState == 4 && xhr.status == 200){
          var data = xhr.responseText;
        }
            
      }    
   }
 
-  function update(){
+  /*function update(gamename){
     //com GET
     //nick,game
-
+    //gname();
      //group , nick ,pass,size
      var user = document.getElementById("user").value;
      if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
      var xhr = new XMLHttpRequest();
-     xhr.open("GET","http://twserver.alunos.dcc.fc.up.pt:8008"+"/update",true);
+     xhr.open("GET","http://twserver.alunos.dcc.fc.up.pt:8008"+"/update?nick"+user+"&game"+gamename,true);
      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
      
-     var objt = { nick: user,game: gamename };
+     /*var objt = { nick: user,game: gamename };
      var stri =JSON.stringify(objt);
      console.log(stri);
-     xhr.send(stri); 
- 
+     xhr.send(stri); */
+ /*
      xhr.onreadystatechange = function() {
-       if(xhr.readyState < 4 && xhr.status == 200){
+       if(xhr.readyState == 4 && xhr.status == 200){
          var data = xhr.responseText;
          console.log(data);
          //alert('O jogo foi criado');
@@ -434,7 +458,7 @@ var namegame;
      }
             
                 
-  }
+  }*/
 
   function ranking(){
     //size           
@@ -450,7 +474,7 @@ var namegame;
      xhr.send(stri); 
  
      xhr.onreadystatechange = function() {
-       if(xhr.readyState < 4 && xhr.status == 200){
+       if(xhr.readyState == 4 && xhr.status == 200){
          var data = xhr.responseText;
          console.log(data);
         // alert('O jogo foi criado');
@@ -460,4 +484,9 @@ var namegame;
      }
                         
   }
-
+/*
+  var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+  ctx.font = "30px Arial";
+  ctx.strokeText("Hello World",10,50);
+  */
