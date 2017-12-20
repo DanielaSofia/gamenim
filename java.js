@@ -114,9 +114,10 @@ var gamename;
   }
 
   //verificar quem ganhou
+ 
   function jogada() {
 
-    if(document.getElementById("pvp").checked == false){
+    if(document.getElementById("pvc").checked == true){
         if (gameover()==0) {
           document.getElementById("ft").disabled = true;
           alert("Player Won!");
@@ -150,6 +151,7 @@ var gamename;
       }
     }
   //verifica se tabuleiro esta vazio e retorna 1 ou 0
+ 
   function gameover() {
     var total=0;
     for (var i = 0; i < valor; i++) {
@@ -306,6 +308,14 @@ var gamename;
     
   }
 
+  
+  
+ 
+  
+  function loadgamename(gname, callback) {
+    setTimeout(function() {
+      return callback(gname) }, 1000);
+  }
   function join(){
     //group , nick ,pass,size
     var user = document.getElementById("user").value;
@@ -324,7 +334,10 @@ var gamename;
     xhr.onreadystatechange = function() {
       if(xhr.readyState < 4 && xhr.status == 200){
         var jogo =xhr.responseText;
-        var gamename=jogo.game;
+        gamename=jogo.game;
+        loadgamename(gamename, callback);
+       
+         
         console.log(gamename);
         alert('O jogo foi criado');
       }
@@ -357,19 +370,24 @@ var gamename;
            
      }     
   }
-      
+   
+  
+
+
    function notify( linha ,  pecass){
     //nick,pass,game,stack,pieces
    
      var user = document.getElementById("user").value;
      var passi = document.getElementById("pass").value;
+     var gname=loadgamename('gamename', function(response) {   return response  });
+     console.log(gname);
      //buttons = document.getElementsByClassName("peca"+i);
      if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
      var xhr = new XMLHttpRequest();
      xhr.open("POST","http://twserver.alunos.dcc.fc.up.pt:8008"+"/notify",true);
      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
      
-     var objt = { nick: user, pass: passi, game: gamename, stack: linha , pieces:pecass};
+     var objt = { nick: user, pass: passi, game: gname, stack: linha , pieces:pecass};
      var stri =JSON.stringify(objt);
      console.log(stri);
      xhr.send(stri); 
