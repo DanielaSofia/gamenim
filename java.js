@@ -103,13 +103,15 @@ var gamename;
 
   //quem comeca primeiro
   function vez() {
-    if(document.getElementById("com").checked == true){
-      alert("Computer's Turn");
-      computerPlay();
-    }
-    else{
-      alert("Player's Turn");
-      playerPlay();
+    if(document.getElementById("pvc").checked == true){
+      if(document.getElementById("com").checked == true){
+        alert("Computer's Turn");
+        computerPlay();
+      }
+      else{
+        alert("Player's Turn");
+        playerPlay();
+      }
     }
   }
 
@@ -335,7 +337,7 @@ var gamename;
       if(xhr.readyState < 4 && xhr.status == 200){
         var jogo =xhr.responseText;
         gamename=jogo.game;
-        loadgamename(gamename, callback);
+        loadgamename(gamename, loadgame);
        
          
         console.log(gamename);
