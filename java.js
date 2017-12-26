@@ -6,10 +6,13 @@ var valor=0;
 var gamename;
 var namegame;
 
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.font = "30px Arial";
-ctx.strokeText("Hello World",10,50);
+var tela = document.getElementById("tela");
+var gc = tela.getContext("2d");
+gc.strokeStyle = "royalblue"; 
+//gc.fillText = "white"
+gc.fillStyle ="royalblue";  
+gc.font = '60px serif';
+gc.fillText("Olá mundo!",200,100);
 
   //limpar o tabuleiro
   function limpar(){
