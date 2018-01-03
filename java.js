@@ -7,7 +7,7 @@ var gamename;
 var namegame;
 
 
-/*
+
 var tela = document.getElementById("tela");
 var gc = tela.getContext("2d");
 gc.strokeStyle = "royalblue"; 
@@ -15,7 +15,7 @@ gc.strokeStyle = "royalblue";
 gc.fillStyle ="royalblue";  
 gc.font = '60px serif';
 gc.fillText("NIM",200,100);
-*/
+
   //limpar o tabuleiro
   function limpar(){
     var div = document.getElementById("tabuleiro");
@@ -442,12 +442,7 @@ gc.fillText("NIM",200,100);
 		    }    
 		    if(serverRes.move !== undefined){
 		    	alert("existe move");
-		        if(serverRes.move.orient == "h"){
-		            changeColorH(serverRes.move.row - 1, serverRes.move.col - 1);
-		        }
-		        if(serverRes.move.orient == "v"){
-		            changeColorV(serverRes.move.row - 1, serverRes.move.col - 1);
-		        }
+		    
 		    }
 		    if(serverRes.winner !== undefined){
 	            source.close();
@@ -459,13 +454,7 @@ gc.fillText("NIM",200,100);
       		alert("deu erro: " + JSON.stringify(serverRes));
       	}
     }
-
-
-
-
-
-
-     
+  
   }
 
   function ranking(){
