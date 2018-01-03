@@ -434,34 +434,71 @@ gc.fillText("Olá mundo!",200,100);
      }    
   }
 
-  /*function update(gamename){
+  function update(gamename){
     //com GET
     //nick,game
     //gname();
-     //group , nick ,pass,size
-     var user = document.getElementById("user").value;
-     if(!XMLHttpRequest) { console.log("XHR não é suportado"); return; }
-     var xhr = new XMLHttpRequest();
-     xhr.open("GET","http://twserver.alunos.dcc.fc.up.pt:8008"+"/update?nick"+user+"&game"+gamename,true);
-     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-     
-     /*var objt = { nick: user,game: gamename };
-     var stri =JSON.stringify(objt);
-     console.log(stri);
-     xhr.send(stri); */
- /*
-     xhr.onreadystatechange = function() {
-       if(xhr.readyState == 4 && xhr.status == 200){
-         var data = xhr.responseText;
-         console.log(data);
-         //alert('O jogo foi criado');
+    //group , nick ,pass,size
+    var user = document.getElementById("user").value;
+    var source = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick"+user+"&game"+gamename);
+    source.onmessage = function(event) {
+    	alert("ola amigos esta no onmessage");
+      var serverRes = JSON.parse(event.data);
+      if(!serverRes.error){
+       	alert("ola amigos nao deu erro");
+        opponent = serverRes.opponent;
+        alert("adversario: " + JSON.stringify(opponent));
+        alert("jogador: " + name);
+        if(serverRes.opponent!==undefined){
+         	alert("adversario existe!");
+         	document.getElementById("waiting").style.display='none';
+          
+          if(diff == "beginner"){
+		       	alert("vai criar tabela beginner");
+		        createTable(5,7);
+          }
+          
+			  }
+		    if(serverRes.turn == user){ 
+		        player = 0; 
+		        document.getElementById("turn").innerHTML="TURN: USER"; 
+		    }			
+		    if(serverRes.turn == opponent){
+		        player = 1;
+		        document.getElementById("turn").innerHTML="TURN: OPPONENT"; 
+		    }    
+		    	    
+		    if(serverRes.winner !== undefined){
+	            source.close();
+	            ranking(diff);
+	            alert("o jogo acabou");
+            }
+        }
+    	  else{
+      		alert("deu erro: " + JSON.stringify(serverRes));
+      	}
+    }
+
+
+
+
+    /*var objt = { nick: user,game: gamename };
+    var stri =JSON.stringify(objt);
+    console.log(stri);
+    xhr.send(stri); */
+    /*
+    xhr.onreadystatechange = function() {
+    if(xhr.readyState == 4 && xhr.status == 200){
+      var data = xhr.responseText;
+      console.log(data);
+      //alert('O jogo foi criado');
          
-       }
+    }
            
-     }
+     }*/
             
                 
-  }*/
+  }
 
   function ranking(){
     //size           
