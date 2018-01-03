@@ -45,7 +45,7 @@ gc.fillText("Olá mundo!",200,100);
         alert("Error! size is between 1 and 10.\n Choose another value");
         }else {
           join();
-          tabu();
+         // tabu();
           playerPlay();
         }
     }
@@ -350,30 +350,7 @@ gc.fillText("Olá mundo!",200,100);
         }       
         
         update(gamename);
-        var url = "http://twserver.alunos.dcc.fc.up.pt:8008/update?nick"+user+"&game"+gamename;
-        //cria objeto de comunicaçao
-        var eventSource = new EventSource(url); 
-        
-        //erro na comunicacao
-        eventSource.onerror = function(event) { 
-         // var dataerror = JSON.parse(event.data);
-         alert("conexao nao foi feita");
-         } 
-        //conexao estabelecida
-        eventSource.onstart = function(event) { 
-          //var datastart = JSON.parse(event.data);
-          alert("conexao estabelecida");
-         } 
-        
-        
-        // nova msg recebida
-        eventSource.onmessage = function(event) { 
-          var datamessages = JSON.parse(event.data);
-          if(datamessages =={})alert("À espera do outro jogador!")
-         } 
-         eventSource.close();
-
-         alert('O jogo foi criado');
+        alert('O jogo foi criado');
       }
           
     }
@@ -439,6 +416,63 @@ gc.fillText("Olá mundo!",200,100);
     //nick,game
     //gname();
     //group , nick ,pass,size
+
+    var source = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8000/update?name=" + name + "&game=" + gamename);
+    source.onmessage = function(event) {
+    	alert("ola amigos esta no onmessage");
+        var serverRes = JSON.parse(event.data);
+        if(!serverRes.error){
+        	alert("ola amigos nao deu erro");
+            opponent = serverRes.opponent;
+            alert("adversario: " + JSON.stringify(opponent));
+            alert("jogador: " + name);
+            if(serverRes.opponent!==undefined){
+            	alert("adversario existe!");
+            	document.getElementById("waiting").style.display='none';
+		          if(diff == "beginner"){
+                alert("vai criar tabela beginner");
+                tabu();
+		        }
+			}
+		    if(serverRes.turn == user){ 
+		        player = 0; 
+		        document.getElementById("turn").innerHTML="TURN: USER"; 
+		    }			
+		    if(serverRes.turn == opponent){
+		        player = 1;
+		        document.getElementById("turn").innerHTML="TURN: OPPONENT"; 
+		    }    
+		    if(serverRes.move !== undefined){
+		    	alert("existe move");
+		        if(serverRes.move.orient == "h"){
+		            changeColorH(serverRes.move.row - 1, serverRes.move.col - 1);
+		        }
+		        if(serverRes.move.orient == "v"){
+		            changeColorV(serverRes.move.row - 1, serverRes.move.col - 1);
+		        }
+		    }
+		    if(serverRes.winner !== undefined){
+	            source.close();
+	            ranking(diff);
+	            alert("o jogo acabou");
+            }
+        }
+    	else{
+      		alert("deu erro: " + JSON.stringify(serverRes));
+      	}
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /*
     var user = document.getElementById("user").value;
     var source = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick"+user+"&game"+gamename);
     source.onmessage = function(event) {
@@ -478,15 +512,10 @@ gc.fillText("Olá mundo!",200,100);
       		alert("deu erro: " + JSON.stringify(serverRes));
       	}
     }
-
-
-
-
-    /*var objt = { nick: user,game: gamename };
+    var objt = { nick: user,game: gamename };
     var stri =JSON.stringify(objt);
     console.log(stri);
-    xhr.send(stri); */
-    /*
+    xhr.send(stri); 
     xhr.onreadystatechange = function() {
     if(xhr.readyState == 4 && xhr.status == 200){
       var data = xhr.responseText;
