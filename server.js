@@ -57,9 +57,9 @@ function doGet(pathname,request,response) {
     var answer = {};
     switch(pathname) {
         case "/update":
-            updater.remember(response);
-            request.on('close', () => updater.forget(response));
-            setImmediate(() => updater.update( counter.get())); 
+            //updater.remember(response);
+            //request.on('close', () => updater.forget(response));
+           // setImmediate(() => updater.update( counter.get())); 
             answer.style = "sse";
         break;
         

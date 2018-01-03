@@ -6,14 +6,16 @@ var valor=0;
 var gamename;
 var namegame;
 
+
+/*
 var tela = document.getElementById("tela");
 var gc = tela.getContext("2d");
 gc.strokeStyle = "royalblue"; 
 //gc.fillText = "white"
 gc.fillStyle ="royalblue";  
 gc.font = '60px serif';
-gc.fillText("Olá mundo!",200,100);
-
+gc.fillText("NIM",200,100);
+*/
   //limpar o tabuleiro
   function limpar(){
     var div = document.getElementById("tabuleiro");
@@ -301,13 +303,11 @@ gc.fillText("Olá mundo!",200,100);
     
     var objt = { nick:user, pass:passi};
     var stri =JSON.stringify(objt);
-   // console.log(stri);
     xhr.send(stri); 
 
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4 && xhr.status == 200){
         var data = xhr.responseText;
-       // console.log(data);
         alert('Bem-vindo!');
         login();
       }else{ 
@@ -417,23 +417,21 @@ gc.fillText("Olá mundo!",200,100);
     //gname();
     //group , nick ,pass,size
 
-    var source = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8000/update?name=" + name + "&game=" + gamename);
+    var source = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?name=" + name + "&game=" + gamename);
     source.onmessage = function(event) {
-    	alert("ola amigos esta no onmessage");
         var serverRes = JSON.parse(event.data);
         if(!serverRes.error){
-        	alert("ola amigos nao deu erro");
-            opponent = serverRes.opponent;
+        	  opponent = serverRes.opponent;
             alert("adversario: " + JSON.stringify(opponent));
             alert("jogador: " + name);
             if(serverRes.opponent!==undefined){
             	alert("adversario existe!");
             	document.getElementById("waiting").style.display='none';
-		          if(diff == "beginner"){
-                alert("vai criar tabela beginner");
+		          if(document.getElementById("facil").checked == true){
                 tabu();
-		        }
-			}
+		          }
+            }
+          
 		    if(serverRes.turn == user){ 
 		        player = 0; 
 		        document.getElementById("turn").innerHTML="TURN: USER"; 
@@ -467,66 +465,7 @@ gc.fillText("Olá mundo!",200,100);
 
 
 
-
-
-
-
-
-    /*
-    var user = document.getElementById("user").value;
-    var source = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update?nick"+user+"&game"+gamename);
-    source.onmessage = function(event) {
-    	alert("ola amigos esta no onmessage");
-      var serverRes = JSON.parse(event.data);
-      if(!serverRes.error){
-       	alert("ola amigos nao deu erro");
-        opponent = serverRes.opponent;
-        alert("adversario: " + JSON.stringify(opponent));
-        alert("jogador: " + name);
-        if(serverRes.opponent!==undefined){
-         	alert("adversario existe!");
-         	document.getElementById("waiting").style.display='none';
-          
-          if(diff == "beginner"){
-		       	alert("vai criar tabela beginner");
-		        createTable(5,7);
-          }
-          
-			  }
-		    if(serverRes.turn == user){ 
-		        player = 0; 
-		        document.getElementById("turn").innerHTML="TURN: USER"; 
-		    }			
-		    if(serverRes.turn == opponent){
-		        player = 1;
-		        document.getElementById("turn").innerHTML="TURN: OPPONENT"; 
-		    }    
-		    	    
-		    if(serverRes.winner !== undefined){
-	            source.close();
-	            ranking(diff);
-	            alert("o jogo acabou");
-            }
-        }
-    	  else{
-      		alert("deu erro: " + JSON.stringify(serverRes));
-      	}
-    }
-    var objt = { nick: user,game: gamename };
-    var stri =JSON.stringify(objt);
-    console.log(stri);
-    xhr.send(stri); 
-    xhr.onreadystatechange = function() {
-    if(xhr.readyState == 4 && xhr.status == 200){
-      var data = xhr.responseText;
-      console.log(data);
-      //alert('O jogo foi criado');
-         
-    }
-           
-     }*/
-            
-                
+     
   }
 
   function ranking(){
@@ -553,9 +492,3 @@ gc.fillText("Olá mundo!",200,100);
      }
                         
   }
-/*
-  var c = document.getElementById("myCanvas");
-  var ctx = c.getContext("2d");
-  ctx.font = "30px Arial";
-  ctx.strokeText("Hello World",10,50);
-  */
